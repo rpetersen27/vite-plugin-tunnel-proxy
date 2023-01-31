@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "rootDir": "./src",
+    "rootDir": "./",
     "moduleResolution": "node",
     "baseUrl": "./src",
     "declaration": true,
@@ -19,6 +19,6 @@
     "noImplicitReturns": true,
     "skipLibCheck": true
   },
-  "include": ["src"],
+  "include": ["jest.config.ts", "src", "test"],
   "exclude": ["node_modules"]
 }

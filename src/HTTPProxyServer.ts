@@ -29,12 +29,15 @@ export default class HTTPProxyServer extends EventEmitter {
 
   async createConnection (): Promise<net.Socket> {
     const socket = await new Promise<net.Socket>(resolve => {
-      const { port } = this.target.address() as net.AddressInfo
-      const connection = net.connect(port, '127.0.0.1', () => {
+      const { port, address, family } = this.target.address() as net.AddressInfo
+      const host = family === 'IPv4'
+        ? (address === '0.0.0.0' ? '127.0.0.1' : address)
+        : (address === '::' ? '::1' : address)
+      const connection = net.connect(port, host, () => {
         resolve(connection)
       })
       connection.setTimeout(5000)
-      connection.on('error', this.handleError)
+      connection.on('error', this.handleError.bind(this))
     })
     return socket
   }
