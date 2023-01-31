@@ -3,8 +3,8 @@ import http from 'node:http'
 import net from 'node:net'
 
 export default class HTTPProxyServer extends EventEmitter {
-  private target: http.Server
-  private internalServer: http.Server
+  private readonly target: http.Server
+  private readonly internalServer: http.Server
 
   constructor (target: http.Server) {
     super()
@@ -16,23 +16,19 @@ export default class HTTPProxyServer extends EventEmitter {
   }
 
   async open (port: number): Promise<void> {
-    return new Promise(resolve => {
-      this.internalServer.listen(port, () => {
-        resolve()
-      })
+    await new Promise<void>(resolve => {
+      this.internalServer.listen(port, resolve)
     })
   }
 
   async close (): Promise<void> {
-    return new Promise(resolve => {
-      this.internalServer.close(() => {
-        resolve()
-      })
+    await new Promise<void>(resolve => {
+      this.internalServer.close(() => resolve)
     })
   }
 
-  createConnection (): Promise<net.Socket> {
-    return new Promise(resolve => {
+  async createConnection (): Promise<net.Socket> {
+    const socket = await new Promise<net.Socket>(resolve => {
       const { port } = this.target.address() as net.AddressInfo
       const connection = net.connect(port, '127.0.0.1', () => {
         resolve(connection)
@@ -40,17 +36,19 @@ export default class HTTPProxyServer extends EventEmitter {
       connection.setTimeout(5000)
       connection.on('error', this.handleError)
     })
+    return socket
   }
 
-  async onConnect (_req: http.IncomingMessage, client: net.Socket, head: Buffer) {
-    const connection = await this.createConnection()
-    client.write('HTTP/1.1 200 OK\r\n\r\n')
-    connection.write(head)
-    client.pipe(connection)
-    connection.pipe(client)
+  onConnect (_req: http.IncomingMessage, client: net.Socket, head: Buffer): void {
+    void this.createConnection().then(connection => {
+      client.write('HTTP/1.1 200 OK\r\n\r\n')
+      connection.write(head)
+      client.pipe(connection)
+      connection.pipe(client)
+    })
   }
 
-  handleError (err: Error) {
+  handleError (err: Error): void {
     this.emit('error', err)
   }
 }

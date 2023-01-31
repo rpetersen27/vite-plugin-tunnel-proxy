@@ -6,32 +6,32 @@ export default function ({
   port = 8080,
   protocol = 'http'
 }: {
-  port?: number,
+  port?: number
   protocol?: 'http'
-} = {}) {
+} = {}): Plugin {
   let logger: Logger
 
   return {
     name: 'vite-plugin-connect-proxy',
 
-    configResolved(config) {
-        logger = config.logger
+    configResolved (config) {
+      logger = config.logger
     },
 
-    async configureServer (server: ViteDevServer ) {
+    async configureServer (server: ViteDevServer) {
       if (protocol !== 'http') throw new Error('Only "http" protocol is supported')
 
       const { httpServer } = server
-      if (!httpServer) throw new Error('No vite-dev-server found')
+      if (httpServer === null) throw new Error('No vite-dev-server found')
 
       const proxyServer = new HTTPProxyServer(httpServer)
-      proxyServer.open(port).then(() => logger.info(colors.cyan('[vite-plugin-connect-proxy] ') + `Created HTTP proxy on port ${port}`))
+      void proxyServer.open(port).then(() => { logger.info(colors.cyan('[vite-plugin-connect-proxy] ') + `Created HTTP proxy on port ${port}`) })
 
-      proxyServer.on('error', (err) => logger.error(colors.cyan('[vite-plugin-connect-proxy] ') + colors.red(err.message)))
+      proxyServer.on('error', (err) => { logger.error(colors.cyan('[vite-plugin-connect-proxy] ') + colors.red(err.message)) })
 
       httpServer.on('close', () => {
-        proxyServer.close()
+        void proxyServer.close()
       })
     }
-  } as Plugin
+  }
 }

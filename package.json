@@ -8,6 +8,7 @@
   "author": "Richard Petersen <richard@planet-petersen.de>",
   "license": "MIT",
   "scripts": {
+    "lint": "eslint --ext .ts src",
     "prepublish": "tsc"
   },
   "devDependencies": {
