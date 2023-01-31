@@ -12,7 +12,7 @@ export default function ({
   let logger: Logger
 
   return {
-    name: 'vite-plugin-connect-proxy',
+    name: 'vite-plugin-tunnel-proxy',
 
     configResolved (config) {
       logger = config.logger
@@ -26,8 +26,8 @@ export default function ({
 
       const proxyServer = new HTTPProxyServer(httpServer)
 
-      proxyServer.on('error', (err) => { logger.error(colors.cyan('[vite-plugin-connect-proxy] ') + colors.red(err.message)) })
-      await proxyServer.open(port).then(() => { logger.info(colors.cyan('[vite-plugin-connect-proxy] ') + `Created HTTP proxy on port ${port}`) })
+      proxyServer.on('error', (err) => { logger.error(colors.cyan('[vite-plugin-tunnel-proxy] ') + colors.red(err.message)) })
+      await proxyServer.open(port).then(() => { logger.info(colors.cyan('[vite-plugin-tunnel-proxy] ') + `Created HTTP proxy on port ${port}`) })
 
       httpServer.on('close', () => {
         void proxyServer.close()
