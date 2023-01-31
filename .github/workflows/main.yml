@@ -9,17 +9,15 @@ on:
       - main
 
 jobs:
-  build:
-    name: Test
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
       - name: Set Node.js 18
         uses: actions/setup-node@v3
         with:
           node-version: 18
-
       - name: Run install
         uses: borales/actions-yarn@v4
         with:
@@ -28,4 +26,21 @@ jobs:
         uses: borales/actions-yarn@v4
         with:
           cmd: lint
-          
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Run install
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: install
+      - name: Runt the tests
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: test
+

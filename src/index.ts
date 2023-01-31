@@ -25,9 +25,9 @@ export default function ({
       if (httpServer === null) throw new Error('No vite-dev-server found')
 
       const proxyServer = new HTTPProxyServer(httpServer)
-      void proxyServer.open(port).then(() => { logger.info(colors.cyan('[vite-plugin-connect-proxy] ') + `Created HTTP proxy on port ${port}`) })
 
       proxyServer.on('error', (err) => { logger.error(colors.cyan('[vite-plugin-connect-proxy] ') + colors.red(err.message)) })
+      await proxyServer.open(port).then(() => { logger.info(colors.cyan('[vite-plugin-connect-proxy] ') + `Created HTTP proxy on port ${port}`) })
 
       httpServer.on('close', () => {
         void proxyServer.close()

@@ -7,4 +7,5 @@ parserOptions:
   ecmaVersion: latest
   sourceType: module
   project: ./tsconfig.json
+root: true
 rules: {}
