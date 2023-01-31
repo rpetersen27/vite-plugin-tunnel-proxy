@@ -1,0 +1,27 @@
+{
+  "name": "vite-plugin-connect-proxy",
+  "version": "0.0.0",
+  "description": "A proxy plugin for vite that works with https and SwitchyOmega",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": "git@github.com:Holorium/vite-plugin-connect-proxy.git",
+  "author": "Richard Petersen <richard@planet-petersen.de>",
+  "license": "MIT",
+  "scripts": {
+    "prepublish": "tsc"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "eslint": "^8.0.1",
+    "eslint-config-standard-with-typescript": "^33.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "typescript": "*",
+    "vite": "^4.0.4"
+  },
+  "dependencies": {
+    "@types/node": "^18.11.18",
+    "colors": "^1.4.0"
+  }
+}
