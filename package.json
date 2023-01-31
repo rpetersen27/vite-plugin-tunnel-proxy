@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-connect-proxy",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A proxy plugin for vite that works with https and SwitchyOmega",
   "main": "dist/index.js",
   "type": "module",
