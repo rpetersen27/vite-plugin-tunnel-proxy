@@ -13,7 +13,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ext .ts src",
-    "prepublish": "tsc",
+    "prepublish": "rm -rf ./dist/ && tsc",
     "test": "mocha --exit"
   },
   "devDependencies": {

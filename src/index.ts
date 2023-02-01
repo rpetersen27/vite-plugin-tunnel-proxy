@@ -1,6 +1,6 @@
 import type { Plugin, ViteDevServer, Logger } from 'vite'
 import colors from 'colors'
-import HTTPProxyServer from './HTTPProxyServer'
+import HTTPProxyServer from './HTTPProxyServer.js'
 
 export default function ({
   port = 8080,

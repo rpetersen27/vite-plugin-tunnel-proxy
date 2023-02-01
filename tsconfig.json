@@ -19,6 +19,6 @@
     "noImplicitReturns": true,
     "skipLibCheck": true
   },
-  "include": ["jest.config.ts", "src", "test"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }
