@@ -5,7 +5,10 @@
   "main": "dist/index.js",
   "type": "module",
   "types": "dist/index.d.ts",
-  "repository": "git@github.com:Holorium/vite-plugin-tunnel-proxy.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Holorium/vite-plugin-tunnel-proxy.git"
+  },
   "author": "Richard Petersen <richard@planet-petersen.de>",
   "license": "MIT",
   "scripts": {
