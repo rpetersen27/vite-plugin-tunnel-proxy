@@ -21,8 +21,11 @@ export default function ({
     async configureServer (server: ViteDevServer) {
       if (protocol !== 'http') throw new Error('Only "http" protocol is supported')
 
-      const { httpServer } = server
-      if (httpServer === null) throw new Error('No vite-dev-server found')
+      const { httpServer }: ViteDevServer = server
+      if (httpServer === null) {
+        logger.error(colors.cyan('[vite-plugin-connect-proxy] ') + colors.red('Vite is running in middlewareMode, which is not supported by this plugin.'))
+        return
+      }
 
       const proxyServer = new HTTPProxyServer(httpServer)
 
